@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/test
+    username: 'postgres'
+    password: 'postgres'
+    hikari:
+      idle-timeout: 10000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: WriteHikariPool
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+
+server:
+  port: 5000
+
+mybatis-plus:
+  configuration:
+    #  specification If the database field is order_id, then the entity field should be written as orderId
+    map-underscore-to-camel-case: true
+  #Mybatis mapper.xml file location
+  mapper-locations: classpath*:**/sql/*.xml
