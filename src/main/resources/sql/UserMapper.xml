@@ -3,9 +3,9 @@
 
 <mapper namespace="com.rupesh.mapper.UserMapper">
 
-    <resultMap id="baseResultMap" type="com.rupesh.model.UserDTO">
+    <resultMap id="baseResultMap" type="com.rupesh.model.UserResponseDTO">
         <result property="email" column="email"/>
-        <result property="fullName" column="full_name"/>
+        <result property="fullName" column="fullName"/>
         <collection property="address" ofType="com.rupesh.model.AddressDTO">
             <result property="country" column="country"/>
             <result property="city" column="city"/>
@@ -15,11 +15,47 @@
     </resultMap>
 
     <select id="getUser" resultMap="baseResultMap">
-        select u.full_name, u.email, a.city, a.country, a.zone, a.street
+        select case
+        when u.middle_name IS NOT NULL
+        then concat(u.first_name, ' ', u.middle_name, ' ', u.last_name)
+        else concat(u.first_name, ' ', u.last_name) end as fullName,
+        u.email as email,
+        a.city as city,
+        a.country as country,
+        a.zone as zone,
+        a.street as street
         from users u
-                 left join address a on u.address_id = a.id
-        <if test="userId != null">
-            where u.id = #{userId}
+        left join address a on u.address_id = a.id
+        <if test="searchField.firstName != null and searchField.firstName != ''">
+            where lower(u.first_name) = lower(#{searchField.firstName})
+        </if>
+
+        <if test="searchField.middleName != null and searchField.middleName != ''">
+            where lower(u.middle_name) = lower(#{searchField.middleName})
+        </if>
+
+        <if test="searchField.lastName != null and searchField.lastName != ''">
+            where lower(u.last_name) = lower(#{searchField.lastName})
+        </if>
+
+        <if test="searchField.email != null and searchField.email != ''">
+            where lower(u.email) = lower(#{searchField.email})
+        </if>
+
+        <if test="searchField.country != null and searchField.country != ''">
+            where lower(a.country) = lower(#{searchField.country})
+        </if>
+
+        <if test="searchField.city != null and searchField.city != ''">
+            where lower(a.city) = lower(#{searchField.city})
+        </if>
+
+        <if test="searchField.zone != null and searchField.zone != ''">
+            where lower(a.zone) = lower(#{searchField.zone})
+        </if>
+
+        <if test="searchField.street != null and searchField.street != ''">
+            where lower(a.street) = lower(#{searchField.street})
         </if>
     </select>
 

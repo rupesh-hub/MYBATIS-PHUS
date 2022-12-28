@@ -1,6 +1,7 @@
 package com.rupesh.resource;
 
 import com.rupesh.model.UserDTO;
+import com.rupesh.pagination.PagingRequest;
 import com.rupesh.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,17 +21,12 @@ public class UserResource {
 
     @PostMapping(path={"/register"})
     public ResponseEntity<?> saveUser(@RequestBody final UserDTO userDTO){
-        return new ResponseEntity<>(userService.saveUser(userDTO), HttpStatus.CREATED);
+        return new ResponseEntity(userService.saveUser(userDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping(path={"/filter/{userId}"})
-    public ResponseEntity<?> filterUser(@PathVariable final Long userId){
-        return new ResponseEntity<>(userService.getAllUser(userId), HttpStatus.OK);
-    }
-
-    @GetMapping(path={"/all"})
-    public ResponseEntity<?> allUsers(){
-        return new ResponseEntity<>(userService.getAllUser(null), HttpStatus.OK);
+    @PostMapping(path={"/all"})
+    public ResponseEntity<?> allUsers(@RequestBody final PagingRequest pagingRequest){
+        return new ResponseEntity(userService.getAllUser(pagingRequest), HttpStatus.OK);
     }
 
 }

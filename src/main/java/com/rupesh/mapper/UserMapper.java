@@ -1,13 +1,15 @@
 package com.rupesh.mapper;
 
-import com.rupesh.model.UserDTO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rupesh.model.UserResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
 
-    List<UserDTO> getUser(final Long userId);
+    Page<UserResponseDTO> getUser(final Page<UserResponseDTO> page, @Param("searchField") final Map<String, Object> searchField);
 
 }

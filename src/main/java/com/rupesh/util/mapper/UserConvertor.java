@@ -13,7 +13,9 @@ public class UserConvertor {
         final User user = new User();
 
         user.setEmail(source.getEmail());
-        user.setFullName(source.getFullName());
+        user.setFirstName(source.getFirstName());
+        user.setMiddleName(source.getMiddleName());
+        user.setLastName(source.getLastName());
         user.setAddress(AddressMapper.toEntity(source.getAddress()));
         return user;
     }
@@ -22,7 +24,9 @@ public class UserConvertor {
         final UserDTO userDTO = new UserDTO();
 
         userDTO.setEmail(source.getEmail());
-        userDTO.setFullName(source.getFullName());
+        userDTO.setFirstName(source.getFirstName());
+        userDTO.setMiddleName(source.getMiddleName());
+        userDTO.setLastName(source.getLastName());
         userDTO.setAddress(AddressMapper.toDto(source.getAddress()));
 
         return userDTO;

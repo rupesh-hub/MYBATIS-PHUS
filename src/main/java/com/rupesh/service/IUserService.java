@@ -1,16 +1,15 @@
 package com.rupesh.service;
 
 import com.rupesh.model.UserDTO;
+import com.rupesh.model.UserResponseDTO;
+import com.rupesh.pagination.PagingRequest;
+import com.rupesh.util.global.GlobalResponse;
 
 import java.util.List;
 
 public interface IUserService {
 
-    UserDTO saveUser(final UserDTO userDTO);
+    GlobalResponse<UserDTO> saveUser(final UserDTO userDTO);
+    GlobalResponse<List<UserResponseDTO>> getAllUser(final PagingRequest pagingRequest);
 
-    UserDTO updateUser(final UserDTO userDTO, final String userId);
-
-    List<UserDTO> getAllUser(final Long userId);
-
-    UserDTO deleteUser(final String userId);
 }

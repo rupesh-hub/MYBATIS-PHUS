@@ -9,7 +9,9 @@ import lombok.*;
 @ToString
 public class UserDTO {
 
-    private String fullName;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     private String email;
     private AddressDTO address;
 
