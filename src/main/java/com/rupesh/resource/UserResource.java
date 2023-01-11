@@ -19,14 +19,35 @@ public class UserResource {
         this.userService = userService;
     }
 
+    /**
+     *
+     * @param userDTO
+     * @return
+     */
     @PostMapping(path={"/register"})
     public ResponseEntity<?> saveUser(@RequestBody final UserDTO userDTO){
         return new ResponseEntity(userService.saveUser(userDTO), HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param pagingRequest
+     * @return
+     */
     @PostMapping(path={"/all"})
     public ResponseEntity<?> allUsers(@RequestBody final PagingRequest pagingRequest){
         return new ResponseEntity(userService.getAllUser(pagingRequest), HttpStatus.OK);
     }
 
+    @PutMapping("/assign-role/id/{userId}/role/{roleName}")
+    public ResponseEntity<?> assignRole(@PathVariable final Long userId,
+                                        @PathVariable final String roleName){
+        return new ResponseEntity(userService.assignRole(roleName,userId), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/remove-role/id/{userId}/role/{roleName}")
+    public ResponseEntity<?> removeAssignedRole(@PathVariable final Long userId,
+                                                @PathVariable final String roleName){
+        return new ResponseEntity(userService.removeAssignedRole(roleName,userId), HttpStatus.CREATED);
+    }
 }

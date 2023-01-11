@@ -3,7 +3,7 @@ package com.rupesh.entity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Setter
 @Getter

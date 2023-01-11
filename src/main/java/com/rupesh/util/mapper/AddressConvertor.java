@@ -6,7 +6,7 @@ import com.rupesh.model.AddressDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddressMapper {
+public class AddressConvertor {
 
     public static AddressDTO toDto(final Address address){
         AddressDTO addressDTO = new AddressDTO();
@@ -27,7 +27,7 @@ public class AddressMapper {
     }
 
     public static List<AddressDTO> toDtoList(final List<Address> addressList) {
-        return addressList.stream().map(AddressMapper::toDto).collect(Collectors.toList());
+        return addressList.stream().map(AddressConvertor::toDto).collect(Collectors.toList());
     }
 
 }

@@ -11,5 +11,7 @@ public interface IUserService {
 
     GlobalResponse<UserDTO> saveUser(final UserDTO userDTO);
     GlobalResponse<List<UserResponseDTO>> getAllUser(final PagingRequest pagingRequest);
+    GlobalResponse<UserDTO> assignRole(final String roleName, final Long userId);
+    GlobalResponse<UserDTO> removeAssignedRole(final String roleName, final Long userId);
 
 }

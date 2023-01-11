@@ -22,11 +22,11 @@ public class GlobalUtil<T> {
                 .build();
     }
 
-    public static Long getCurrentPage(final Long page){
+    public static Long getCurrent(final Long page){
         return page == null ? 1 : page; // DEFAULT : 1
     }
 
-    public static Long getPageSize(final Long pageSize){
+    public static Long getSize(final Long pageSize){
         return pageSize == null ? 10 : pageSize; // DEFAULT : 10
     }
 

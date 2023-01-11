@@ -5,12 +5,17 @@
 
     <resultMap id="baseResultMap" type="com.rupesh.model.UserResponseDTO">
         <result property="email" column="email"/>
-        <result property="fullName" column="fullName"/>
+        <result property="fullNameEN" column="fullNameEN"/>
+        <result property="fullNameNP" column="fullNameNP"/>
         <collection property="address" ofType="com.rupesh.model.AddressDTO">
             <result property="country" column="country"/>
             <result property="city" column="city"/>
             <result property="zone" column="zone"/>
             <result property="street" column="street"/>
+        </collection>
+        <collection property="roles" ofType="java.lang.String"
+                    select="selectRole"
+                    column="{email=email}">
         </collection>
     </resultMap>
 
@@ -18,14 +23,18 @@
         select case
         when u.middle_name IS NOT NULL
         then concat(u.first_name, ' ', u.middle_name, ' ', u.last_name)
-        else concat(u.first_name, ' ', u.last_name) end as fullName,
+        else concat(u.first_name, ' ', u.last_name) end as fullNameEN,
+        case
+        when u.middle_namenp IS NOT NULL
+        then concat(u.first_namenp, ' ', u.middle_namenp, ' ', u.last_namenp)
+        else concat(u.first_namenp, ' ', u.last_namenp) end as fullNameNP,
         u.email as email,
         a.city as city,
         a.country as country,
         a.zone as zone,
         a.street as street
         from users u
-        left join address a on u.address_id = a.id
+        left join address a on u.address_id  = a.id
         <if test="searchField.firstName != null and searchField.firstName != ''">
             where lower(u.first_name) = lower(#{searchField.firstName})
         </if>
@@ -57,6 +66,13 @@
         <if test="searchField.street != null and searchField.street != ''">
             where lower(a.street) = lower(#{searchField.street})
         </if>
+    </select>
+
+    <select id="selectRole" resultType="java.lang.String">
+        select r.name as name
+        from roles r
+                 left join users_roles ur on ur.role_id  = r.id
+                 left join users u on ur.user_id = u.id where lower(u.email) = lower(#{email})
     </select>
 
 </mapper>
